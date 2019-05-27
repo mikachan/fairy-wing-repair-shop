@@ -121,6 +121,9 @@ export const skuFragment = graphql`
         product {
             id
             name
+            metadata {
+                description
+            }
             active
             created
             updated
