@@ -27,7 +27,7 @@ const ProductPage = ({ productId }) => {
                     toggle(true);
                 }}
             >
-                Add To Cart
+                Add to Bag
             </button>
         </div>
     );
