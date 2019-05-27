@@ -41,15 +41,17 @@ const Checkout = () => {
             alert(err.message);
         }
 
+        console.log(response);
+
         localStorage.setItem("cart", "{}");
-        // navigate(`/order?id=${response.data.id}`)
+        navigate(`/order?id=${response.data.id}`);
     };
 
     return (
         <StripeCheckout
             token={onToken}
             stripeKey={process.env.STRIPE_PUBLISHABLE_KEY}
-            name="gatsby-starter-stripe" // the pop-in header title
+            name="Fairy Wing Repair Shop" // the pop-in header title
             description={`${count} Items`} // the pop-in header subtitle
             image={icon} // the pop-in header image (default none)
             panelLabel="Pay" // prepended to the amount in the bottom pay button
