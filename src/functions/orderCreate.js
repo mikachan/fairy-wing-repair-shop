@@ -5,44 +5,20 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
  */
 module.exports.handler = async (event, context, callback) => {
     const requestBody = JSON.parse(event.body);
-    const { id, email } = requestBody.token;
-    const { currency, items, shipping } = requestBody.order;
-
-    // Create order
-    const order = await stripe.orders.create(
-        {
-            currency,
-            items,
-            shipping,
-            email
-        },
-        (err, _) => {
-            if (err) errorResponse(err);
-        }
-    );
-
-    // Charge order
-    stripe.orders.pay(
-        order.id,
-        {
-            source: id
-        },
-        (err, _) => {
-            if (err) errorResponse(err);
-        }
-    );
+    const order = requestBody.order;
+    const source = requestBody.token.id;
 
     const response = {
         headers: {
             "Access-Control-Allow-Origin": "*"
         },
         statusCode: 200,
-        body: {
+        body: JSON.stringify({
             data: order,
+            source: source,
             message: "Order placed successfully!"
-        }
+        })
     };
-    callback(null, response);
 
     /** Respond with status code 500 and error message */
     function errorResponse(err) {
@@ -57,4 +33,14 @@ module.exports.handler = async (event, context, callback) => {
         };
         callback(null, response);
     }
+
+    try {
+        const stripeOrder = await stripe.orders.create(order);
+        console.log(`Order created: ${stripeOrder.id}`);
+        await stripe.orders.pay(stripeOrder.id, { source });
+    } catch (err) {
+        console.log(`Order error: ${err}`);
+        return errorResponse(err);
+    }
+    return callback(null, response);
 };
