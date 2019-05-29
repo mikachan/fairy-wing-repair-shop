@@ -10,14 +10,19 @@ const Checkout = () => {
     const onToken = async (token, addresses) => {
         const items = Object.entries(cart).map(([skuId, quantity]) => ({
             type: "sku",
-            parent: skuId,
-            quantity
+            parent: quantity[0].id,
+            quantity: quantity[1]
         }));
+
+        console.log(items); // TODO: Is this a permanent fix?
 
         let response;
         try {
             response = await fetch("/.netlify/functions/orderCreate", {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify({
                     token,
                     order: {
@@ -33,7 +38,8 @@ const Checkout = () => {
                                 postal_code: addresses.shipping_address_zip,
                                 country: addresses.shipping_address_country_code
                             }
-                        }
+                        },
+                        email: token.email
                     }
                 })
             }).then(response => response.json());
@@ -41,10 +47,11 @@ const Checkout = () => {
             alert(err.message);
         }
 
-        console.log(response);
-
         localStorage.setItem("cart", "{}");
-        navigate(`/order?id=${response.data.id}`);
+
+        if (response.source) {
+            navigate(`/order?id=${response.source}`);
+        }
     };
 
     return (
