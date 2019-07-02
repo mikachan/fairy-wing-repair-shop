@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 
 const Order = () => (
-    <Layout showCart={false}>
+    <Layout>
         <SEO title="Thank you for your order" />
         <h1>Thank you for your order!</h1>
         <p>You have successfully placed an order.</p>
