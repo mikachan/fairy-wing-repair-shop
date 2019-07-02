@@ -14,7 +14,7 @@ const Checkout = () => {
             quantity: quantity[1]
         }));
 
-        console.log(items); // TODO: Is this a permanent fix?
+        // TODO: Is this a permanent fix?
 
         let response;
         try {
