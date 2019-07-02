@@ -47,7 +47,8 @@ module.exports = {
             options: {
                 async: true
             }
-        }
+        },
+        `gatsby-plugin-sass`
     ],
     // for avoiding CORS while developing Netlify Functions locally
     // read more: https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying
