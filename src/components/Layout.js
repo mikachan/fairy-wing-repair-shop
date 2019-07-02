@@ -5,8 +5,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import Header from "./Header";
 import ProductsProvider from "./ProductsProvider";
 import CartProvider from "./CartProvider";
-
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./layout.scss";
 
 const Layout = ({ children }) => (
     <StaticQuery
