@@ -1,22 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-/** Respond with status code 500 and error message */
-function errorResponse(err, callback) {
-  const response = {
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
-    statusCode: 500,
-    body: JSON.stringify({
-      error: err
-    })
-  }
-
-  if (typeof callback === 'function') {
-    callback(null, response)
-  }
-}
-
 /**
  * Captures payment token and creates order.
  */
@@ -25,34 +8,39 @@ module.exports.handler = async (event, context, callback) => {
     const order = requestBody.order;
     const source = requestBody.token.id;
 
-  // Create order
-  try {
-    const order = await stripe.orders.create({
-      currency,
-      items,
-      shipping,
-      email,
-    });
-
-    // Charge order
-    stripe.orders.pay(order.id, {
-      source: id,
-    })
-
     const response = {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      statusCode: 200,
-      body: JSON.stringify({
-        data: order,
-        message: 'Order placed successfully!',
-      }),
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        },
+        statusCode: 200,
+        body: JSON.stringify({
+            data: order,
+            source: source,
+            message: "Order placed successfully!"
+        })
+    };
+
+    /** Respond with status code 500 and error message */
+    function errorResponse(err) {
+        const response = {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+            statusCode: 500,
+            body: JSON.stringify({
+                error: err.message
+            })
+        };
+        callback(null, response);
     }
 
-    callback(null, response)
-
-  } catch (e) {
-    errorResponse(e, callback)
-  }
-}
+    try {
+        const stripeOrder = await stripe.orders.create(order);
+        console.log(`Order created: ${stripeOrder.id}`);
+        await stripe.orders.pay(stripeOrder.id, { source });
+    } catch (err) {
+        console.log(`Order error: ${err}`);
+        return errorResponse(err);
+    }
+    return callback(null, response);
+};

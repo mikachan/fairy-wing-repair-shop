@@ -1,43 +1,30 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
-import Cart from './Cart'
+import "./header.scss";
+
+import Cart from "./Cart";
+import { Link } from "gatsby";
+import PropTypes from "prop-types";
+import React from "react";
+
+const logo = require("../images/logo.png");
 
 const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      margin: `2rem`
-    }}
-  >
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center'
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: '#555',
-            textDecoration: `none`,
-            fontWeight: 300
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-      <Cart />
-    </div>
-  </header>
-)
+    <header>
+        <div className="d-flex justify-content-between p-3 mb-5">
+            <h1 className="mb-0">
+                <img src={logo} className="pr-2" height="60" />
+                <Link to="/">{siteTitle}</Link>
+            </h1>
+            <Cart />
+        </div>
+    </header>
+);
 
 Header.propTypes = {
-  siteTitle: PropTypes.string
-}
+    siteTitle: PropTypes.string
+};
 
 Header.defaultProps = {
-  siteTitle: ``
-}
+    siteTitle: ``
+};
 
-export default Header
+export default Header;

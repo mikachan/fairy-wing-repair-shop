@@ -1,20 +1,23 @@
 import React, { useContext } from "react";
-import { navigate } from "gatsby";
-import StripeCheckout from "react-stripe-checkout";
+
+import { Button } from "react-bootstrap";
 import { CartContext } from "./CartProvider";
+import StripeCheckout from "react-stripe-checkout";
 import icon from "../images/gatsby-icon.png";
+import { navigate } from "gatsby";
 
 const Checkout = () => {
     const { cart, count, total } = useContext(CartContext);
 
-  const onToken = async (token, addresses) => {
-    const items = cart.map(([sku, quantity]) => ({
-      type: 'sku',
-      parent: sku.id,
-      quantity
-    }))
+    const onToken = async (token, addresses) => {
+        const items = Object.entries(cart).map(([skuId, quantity]) => ({
+            type: "sku",
+            parent: quantity[0].id,
+            quantity: quantity[1]
+        }));
 
         // TODO: Is this a permanent fix?
+        // console.log(items);
 
         let response;
         try {
@@ -54,25 +57,35 @@ const Checkout = () => {
         }
     };
 
-    return (
-        <StripeCheckout
-            token={onToken}
-            stripeKey={process.env.STRIPE_PUBLISHABLE_KEY}
-            name="Fairy Wing Repair Shop" // the pop-in header title
-            description={`${count} Items`} // the pop-in header subtitle
-            image={icon} // the pop-in header image (default none)
-            panelLabel="Pay" // prepended to the amount in the bottom pay button
-            amount={total} // cents
-            currency="GBP"
-            locale="en"
-            shippingAddress
-            billingAddress
-            zipCode
-            allowRememberMe
-        >
-            <button>Checkout for £{total / 100}</button>
-        </StripeCheckout>
-    );
+    if (count > 0) {
+        return (
+            <StripeCheckout
+                token={onToken}
+                stripeKey={process.env.STRIPE_PUBLISHABLE_KEY}
+                name="Fairy Wing Repair Shop" // the pop-in header title
+                description={`${count} Items`} // the pop-in header subtitle
+                image={icon} // the pop-in header image (default none)
+                panelLabel="Pay" // prepended to the amount in the bottom pay button
+                amount={total} // cents
+                currency="GBP"
+                locale="en"
+                shippingAddress
+                billingAddress
+                zipCode
+                allowRememberMe
+            >
+                <Button className="d-block my-2">
+                    Checkout for £{total / 100}
+                </Button>
+            </StripeCheckout>
+        );
+    }
+
+    if (count < 1) {
+        return "You have not added any items to you bag yet.";
+    }
+
+    return "";
 };
 
 export default Checkout;
