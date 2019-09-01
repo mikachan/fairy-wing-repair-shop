@@ -10,8 +10,8 @@ const Items = () => {
     return (
         <Row>
             {products.map(product => (
-                <Col sm={4}>
-                    <ProductThumbnail key={product.id} product={product} />
+                <Col key={product.id} sm={4}>
+                    <ProductThumbnail product={product} />
                 </Col>
             ))}
         </Row>

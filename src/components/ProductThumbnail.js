@@ -9,7 +9,7 @@ const ProductThumbnail = ({ product }) => {
     return (
         <div key={product.id} className="product-box p-4 rounded">
             <Link
-                to={`/buy/${product.slug}`}
+                to={`/product/${product.slug}`}
                 style={{ textDecoration: "none" }}
             >
                 <div>
