@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import { StaticQuery, graphql } from "gatsby";
+
+import PropTypes from "prop-types";
 
 export const ProductsContext = React.createContext();
 
@@ -15,14 +16,15 @@ const ProductsProvider = ({ children }) => (
 );
 
 ProductsProvider.propTypes = {
+    data: PropTypes.any,
     children: PropTypes.any.isRequired
 };
 
 /**
-  Shares product information and availability through context.
-  Products are first loaded from Gatsby's GraphQL store and then updated with
-  current information from Stripe.
-*/
+ * Shares product information and availability through context.
+ * Products are first loaded from Gatsby's GraphQL store and then updated with
+ * current information from Stripe.
+ */
 const Provider = ({ data, children }) => {
     /** Load product data from Gatsby store */
     const [initialProducts, initialSkus] = processGatsbyData(data);
