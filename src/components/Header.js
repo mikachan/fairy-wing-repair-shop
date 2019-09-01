@@ -5,20 +5,14 @@ import { Link } from "gatsby";
 import PropTypes from "prop-types";
 import React from "react";
 
+const logo = require("../images/logo.png");
+
 const Header = ({ siteTitle }) => (
     <header>
-        <div className="d-flex justify-content-center p-3 mb-4">
-            <h1 style={{ margin: 0 }}>
-                <Link
-                    to="/"
-                    style={{
-                        color: "#555",
-                        textDecoration: `none`,
-                        fontWeight: 300
-                    }}
-                >
-                    {siteTitle}
-                </Link>
+        <div className="d-flex justify-content-between p-3 mb-5">
+            <h1 className="mb-0">
+                <img src={logo} className="pr-2" height="60" />
+                <Link to="/">{siteTitle}</Link>
             </h1>
             <Cart />
         </div>

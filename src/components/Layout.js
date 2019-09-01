@@ -33,7 +33,7 @@ const Layout = ({ children }) => (
                                 </Col>
                             </Row>
                         </Container>
-                        <footer className="text-center">
+                        <footer className="mt-5 pb-3 text-center">
                             © {new Date().getFullYear()}{" "}
                             {data.site.siteMetadata.title}
                         </footer>
