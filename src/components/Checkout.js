@@ -7,12 +7,12 @@ import icon from "../images/gatsby-icon.png";
 const Checkout = () => {
     const { cart, count, total } = useContext(CartContext);
 
-    const onToken = async (token, addresses) => {
-        const items = Object.entries(cart).map(([skuId, quantity]) => ({
-            type: "sku",
-            parent: quantity[0].id,
-            quantity: quantity[1]
-        }));
+  const onToken = async (token, addresses) => {
+    const items = cart.map(([sku, quantity]) => ({
+      type: 'sku',
+      parent: sku.id,
+      quantity
+    }))
 
         // TODO: Is this a permanent fix?
 
