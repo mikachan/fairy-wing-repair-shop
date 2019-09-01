@@ -31,7 +31,7 @@ const CartProvider = ({ children }) => {
     } catch (err) {
       console.error(err)
     }
-  })
+  }, [contents])
 
   /** An array representing the cart in the form of [{sku}, quantity] */
   const cart = contents.map(([id, quantity]) => {
@@ -53,19 +53,21 @@ const CartProvider = ({ children }) => {
 
     const index = contents.findIndex(item => item[0] === id)
     setContents(state => {
+      const newState = [...state]
       if (index !== -1) {
-        state[index] = [id, quantity]
+        newState[index] = [id, quantity]
       } else {
-        state.push([id, quantity])
+        newState.push([id, quantity])
       }
-      return state
+      return newState
     })
   }
 
   /** Increments item with `id` by `quantity`, which defaults to 0 */
   function add(id, quantity = 1) {
-    const current = contents.find(item => item.id === id)
-    set(id, (current || 0) + quantity)
+    const currentItem = contents.find(item => item[0] === id)
+    const currentQuantity = currentItem ? currentItem[1] : 0
+    set(id, quantity + currentQuantity)
   }
 
   /** Removes item with `id` */

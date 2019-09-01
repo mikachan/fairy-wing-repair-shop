@@ -10,28 +10,29 @@ const ProductPage = ({ productId }) => {
 
     const product = products[productId];
 
-    return (
-        <div style={{ margin: "0 auto", maxWidth: 500 }}>
-            <div style={{ margin: "3rem auto", maxWidth: 300 }}>
-                <Img fluid={product.localFiles[0].childImageSharp.fluid} />
-            </div>
-            <h2>{product.name}</h2>
-            <br />
-            <div style={{ textAlign: "justify" }}>
-                {product.metadata.description}
-            </div>
-            <button
-                style={{ margin: "2rem auto" }}
-                onClick={() => {
-                    add(product.skus[0].id);
-                    toggle(true);
-                }}
-            >
-                Add to Bag
-            </button>
-        </div>
-    );
-};
+  return (
+    <div style={{ margin: '0 auto', maxWidth: 500 }}>
+      <div style={{ margin: '3rem auto', maxWidth: 300 }}>
+        {product.localFiles && (
+          <Img fluid={product.localFiles[0].childImageSharp.fluid} />
+        )}
+      </div>
+      <h2>{product.name}</h2>
+      <div>{product.caption}</div>
+      <br />
+      <div style={{ textAlign: 'justify' }}>{product.description}</div>
+      <button
+        style={{ margin: '2rem auto' }}
+        onClick={() => {
+          add(product.skus[0].id)
+          toggle(true)
+        }}
+      >
+        Add To Cart
+      </button>
+    </div>
+  )
+}
 
 ProductPage.propTypes = {
     productId: PropTypes.string.isRequired
