@@ -1,23 +1,25 @@
 import React, { useContext } from "react";
+
+import { Button } from "react-bootstrap";
 import { CartContext } from "./CartProvider";
-import Checkout from "./Checkout";
 import CartItem from "./CartItem";
+import Checkout from "./Checkout";
 
 const Cart = () => {
     const { cart, count, mode, toggle } = useContext(CartContext);
     return (
         <>
-            <button
+            <Button
                 onClick={() => toggle()}
                 style={{
                     position: "fixed",
                     right: "2rem",
-                    top: "2rem",
+                    top: "1.4rem",
                     zIndex: "2"
                 }}
             >
                 {mode ? "→" : "Shopping Bag"}
-            </button>
+            </Button>
             <div
                 style={{
                     display: mode ? "initial" : "none",
@@ -32,8 +34,7 @@ const Cart = () => {
                     zIndex: 1
                 }}
             >
-                <h1>Shopping Bag</h1>
-                {count === 0 && <span>No items in cart.</span>}
+                <h3>Shopping Bag</h3>
                 {cart.map(([sku, quantity]) => (
                     <CartItem key={sku.id} sku={sku} quantity={quantity} />
                 ))}
