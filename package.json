@@ -7,17 +7,17 @@
     "dependencies": {
         "bootstrap": "^4.3.1",
         "dotenv-webpack": "^1.7.0",
-        "gatsby": "^2.15.1",
-        "gatsby-image": "^2.2.15",
-        "gatsby-plugin-manifest": "^2.2.12",
-        "gatsby-plugin-offline": "^2.2.10",
-        "gatsby-plugin-react-helmet": "^3.1.5",
-        "gatsby-plugin-sass": "^2.1.0",
-        "gatsby-plugin-sharp": "^2.2.18",
+        "gatsby": "^2.15.2",
+        "gatsby-image": "^2.2.16",
+        "gatsby-plugin-manifest": "^2.2.13",
+        "gatsby-plugin-offline": "^3.0.1",
+        "gatsby-plugin-react-helmet": "^3.1.6",
+        "gatsby-plugin-sass": "^2.1.13",
+        "gatsby-plugin-sharp": "^2.2.19",
         "gatsby-plugin-stripe": "^1.2.2",
-        "gatsby-source-filesystem": "^2.1.18",
+        "gatsby-source-filesystem": "^2.1.19",
         "gatsby-source-stripe": "^3.0.3",
-        "gatsby-transformer-sharp": "^2.2.12",
+        "gatsby-transformer-sharp": "^2.2.13",
         "node-sass": "^4.12.0",
         "prop-types": "^15.7.2",
         "react": "^16.9.0",
@@ -26,15 +26,15 @@
         "react-helmet": "^5.2.1",
         "react-stripe-checkout": "^2.6.3",
         "slug": "^1.1.0",
-        "stripe": "^6.36.0"
+        "stripe": "^7.8.0"
     },
     "keywords": [
         "gatsby"
     ],
     "license": "MIT",
     "scripts": {
-        "develop": "gatsby develop",
-        "start": "run-p start:**",
+        "develop": "rimraf ./.cache && gatsby develop",
+        "start": "rimraf ./.cache && run-p start:**",
         "start:app": "npm run develop",
         "start:lambda": "netlify-lambda serve -c ./webpack.development.js src/functions",
         "build": "run-p build:**",
@@ -49,7 +49,7 @@
         "url": "https://github.com/mikachan/fairy-wing-repair-shop/issues"
     },
     "devDependencies": {
-        "eslint": "^5.16.0",
+        "eslint": "^6.3.0",
         "eslint-config-gatsby-standard": "^2.2.0",
         "eslint-plugin-react": "^7.14.3",
         "http-proxy-middleware": "^0.19.1",
