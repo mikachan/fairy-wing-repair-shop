@@ -120,6 +120,7 @@ export const skuFragment = graphql`
         inventory {
             type
         }
+        image
         product {
             id
             name
@@ -131,6 +132,7 @@ export const skuFragment = graphql`
             updated
             images
             localFiles {
+                id
                 childImageSharp {
                     fluid(maxWidth: $maxWidth, quality: $quality) {
                         ...GatsbyImageSharpFluid_withWebp_tracedSVG

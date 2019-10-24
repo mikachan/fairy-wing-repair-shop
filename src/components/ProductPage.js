@@ -27,7 +27,7 @@ const ProductPage = ({ productId }) => {
                 <Col sm={6}>
                     <h2>{product.name}</h2>
                     <div>{product.caption}</div>
-                    <div>{product.description}</div>
+                    <div>{product.metadata.description}</div>
                     <Button
                         className="my-3"
                         onClick={() => {
